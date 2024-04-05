@@ -1,0 +1,72 @@
+{% extends "./base.html"%}
+
+{% load static %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/carrito.css' %}">
+
+{% endblock %}
+
+
+{% block body %}
+
+
+
+<div class="container text-center mt-5">
+    <div  id="containerCarrito" class="container mt-3">
+        <div class="row" id="rowTitulos">
+            <div class="col">
+                <strong>Imagen</strong> 
+            </div>
+            <div class="col">
+                <strong>Producto</strong>
+            </div>
+            <div class="col">
+                <strong>Precio</strong>
+            </div>
+            <div class="col">
+                <strong>Cantidad</strong>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="row mt-2">
+        <div class="col col-md-6">
+            <p>Total a pagar: </p> 
+        </div>
+        <div class="col col-md-6">
+            <p value="0" id="totalPagar"> </p>
+        </div>
+        
+
+
+        {% if user.is_authenticated%}
+
+        <div class="col col-md-12 mt-2">
+            <button id="btnComprar" class="btn btn-primary w-50" data-csrf-token="{{ csrf_token }}">Realizar compra</button>
+        </div>
+        {% else %}
+        
+        <a href="iniciar_sesion" class="btn btn-primary" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para confirmar</a>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'js/carrito.js' %}"></script>
+
+
+{% endblock %}
+

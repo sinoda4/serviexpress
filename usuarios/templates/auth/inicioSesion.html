@@ -1,0 +1,68 @@
+{% extends "taller/base.html"%}
+
+{% load static %}
+
+{% block css %}
+
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<div class="container text-center">
+    <br>
+    {% if messages %}
+            {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>    
+                    {% elif message.tags == 'success' %}
+                    <div class="alert alert-succes alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>    
+                    {% endif %}
+                
+            {% endfor %}
+        
+    {% endif %}
+
+    <h1>Iniciar sesion</h1>
+        <div class="row row-cols-1">
+            <form id="formIniciarSesion" action="login_usuario" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="col">
+                <label for="txtUsername">Ingrese nombre de usuario:</label>
+                <input name="txtUsername" id="txtUsername" type="text" class="form-control">
+            </div>
+    
+            <div class="col">
+                <label for="txtPassword">ingrese contraseña:</label>
+                <input name="txtPassword" id="txtPassword" type="text" class="form-control">
+            </div>
+    
+            
+            <button class="btn btn-success mt-5 w-100">Iniciar sesion</button>
+        </form>
+            <a href="{% url 'registro_usuario' %}" class="btn btn-primary mt-5 w-100" role="button">Registrar usuario</a>
+        </div>
+        
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block script %}
+
+
+
+
+{% endblock %}
+

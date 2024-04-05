@@ -1,0 +1,102 @@
+{% extends "./base.html"%}
+
+{% load static %}
+
+{% block body%}
+<!--Registrar un empleado-->
+
+{% if messages %}
+            {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>  
+                    {% elif message.tags == 'warning' %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>  
+                    {% endif %}                
+            {% endfor %}
+        
+{% endif %}
+
+
+
+    <div class="container">
+        <h1>Registro empleado</h1>
+        <form id="formAgregar" action="agregarEmpleadoForm" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="txtRut">Rut empleado:</label>
+                    <input name="txtRut" id="txtRut" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtnombre">Nombre:</label>
+                    <input name="txtnombre" id="txtnombre" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtApPat">Apellido paterno:</label>
+                    <input name="txtApPat" id="txtApPat" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtApMat">Apellido materno:</label>
+                    <input name="txtApMat" id="txtApMat" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtNumero">Numero de contacto:</label>
+                    <input name="txtNumero" id="txtNumero" type="number" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtCorreo">Correo electronico:</label>
+                    <input name="txtCorreo" id="txtCorreo" type="text" class="form-control">
+                </div>                
+
+
+            </div>
+            <button class="btn btn-success mt-5 w-100">Agregar empleado</button>
+        </form>
+    </div>
+
+
+
+<!--Lista de productos para eliminar y editar-->
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Rut</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido paterno</th>
+            <th scope="col">Apellido materno</th>
+            <th scope="col">correo</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for emp in empleados %}
+            
+          <tr>
+            <th scope="row">{{emp.rut}}</th>
+            <td>{{emp.nombre}}</td>
+            <td>{{emp.ape_paterno}}</td>
+            <td>{{emp.ape_materno}}</td>
+            <td>{{emp.correo_electronico}}</td>
+            <td><a href="{% url 'editar_empleado' emp.pk %}" class="btn btn-primary">Editar</a></td>
+            <td><a href="{% url 'eliminar_empleado' emp.pk %}" class="btn btn-danger">Eliminar</a></td>
+          </tr>
+            {% endfor %}
+        </tbody> 
+      </table>
+</div>
+
+
+
+
+{% endblock %}

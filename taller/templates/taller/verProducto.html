@@ -1,0 +1,70 @@
+{% extends "./base.html"%}
+
+
+
+{% load static %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/ventaProductos.css' %}">
+
+{% endblock %}
+
+
+{% block body%}
+
+<div id="liveAlertPlaceholder"></div>
+
+
+
+<div class="container mt-3">
+    
+    <div id="ventaDiv" class="row text-center">
+        <div class="col-lg-6 col-sm-12 col-md-12">
+            <img src="{{producto.imagenUrl.url}}" class="" alt="{{producto.descripcion}}">
+            <input value="{{producto.imagenUrl.url}}" id="imagenProducto" type="text" hidden>
+        </div>
+
+        <div class="col-lg-6 ">
+            <div class="container">
+                <p><strong>Producto:</strong> {{producto.nombre_producto}} </p>  
+                <input id="nombreProducto" value="{{producto.nombre_producto}}" type="text" hidden>
+                <p value="{{producto.pk}}"><Strong>Codigo de servicio:</Strong> {{producto.pk}}</p>
+                <input id="idProducto" value="{{producto.pk}}" type="number" hidden>
+                <p><strong>Descripcion: </strong>  {{producto.descripcion}}</p>
+            
+
+                <p><strong>Precio de producto:</strong>${{producto.precio}}</p>
+                <input id="precioProducto" value="{{producto.precio}}" type="number" hidden>
+
+                <button id="btnAddProducto" class="btn btn-success mt-1" >añadir producto al carrito</button>
+            </div>
+        </div>
+    </div>    
+</div>
+<br>
+<div class="container text-center">
+    <h2>Otros productos</h2>
+    <div class="row">
+    {% for p in aleatorios%}
+    <div class="col mt-2">
+            <div class="card" style="width: 18rem;">
+                <img src="{{p.imagenUrl.url}}" class="card-img-top" alt="..." height="100px" width="100px">
+                <div class="card-body">
+                    <h5 class="card-title">{{p.nombre_producto}}</h5>
+                    <p class="card-text">${{p.precio}}</p>
+                    <a href="producto/{{p.pk}}" class="btn btn-primary">Ver producto</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'js/agregarCarrito.js' %}"></script>
+
+{% endblock %}

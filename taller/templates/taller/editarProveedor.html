@@ -1,0 +1,41 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+
+
+{% block body %}
+   
+<div class="container mt-3">
+    <h1>Editar proveedor</h1>
+    <form id="formAgregar" action="{%url  'editar_proveedor' prov.id_proveedor %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <label for="txtNombreProveedor">Nombre:</label>
+                <input value="{{prov.nombre_proveedor}}" name="txtNombreProveedor" id="txtNombreProveedor" type="text" class="form-control" ">
+            </div>
+
+            <div class="col-md-6">
+                <label for="txtTelefono">Telefono de contacto:</label>
+                <input name="txtTelefono" id="txtTelefono" type="number" class="form-control" value="{{prov.telefono}}">
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="txtCorreo">Correo electronico:</label>
+                <input name="txtCorreo" id="txtCorreo" type="text" class="form-control" value="{{prov.correo_electronico}}">
+            </div>
+
+            <div class="col-md-12">
+                <label for="txtDatosExtras">informacion extra:</label>
+                <input name="txtDatosExtras" id="txtDatosExtras" type="text" class="form-control" value="{{prov.informacion_extra}}">
+            </div>
+
+        </div>
+        <button class="btn btn-success mt-5 w-100">Agregar proveedor</button>
+    </form>
+</div>
+
+
+
+{% endblock %}

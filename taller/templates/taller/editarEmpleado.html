@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+
+
+{% block body %}
+
+   
+
+    <div class="container">
+        <h1>Editar empleado</h1>
+        <form action="{% url 'editar_empleado' empleado.pk %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="txtRut">Rut:</label>
+                    <input readonly value="{{empleado.rut}}" name="txtRut" id="txtRut" type="text" class="form-control" >
+                </div>
+
+                <div class="col-md-8">
+                    <label for="txtNombre">Nombre:</label>
+                    <input value="{{empleado.nombre}}" name="txtNombre" id="txtNombre" type="text" class="form-control">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtApPat">Apellido paterno:</label>
+                    <input name="txtApPat" id="txtApPat" type="text" class="form-control"  value="{{empleado.ape_paterno}}">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtApMat">Apellido materno:</label>
+                    <input name="txtApMat" id="txtApMat" type="text" class="form-control" value="{{empleado.ape_materno}}">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtNumero">Numero de contacto:</label>
+                    <input name="txtNumero" id="txtNumero" type="number" class="form-control" value="{{empleado.telefono}}">
+                </div>
+
+                <div class="col-md-6">
+                    <label for="txtCorreo">Correo electronico:</label>
+                    <input name="txtCorreo" id="txtCorreo" type="text" class="form-control" value="{{empleado.correo_electronico}}">
+                </div>
+
+
+            </div>
+            <button class="btn btn-success mt-5 w-100">Editar empleado</button>
+        </form>
+    </div>
+
+{% endblock %}

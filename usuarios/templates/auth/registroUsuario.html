@@ -1,0 +1,40 @@
+{% extends "taller/base.html"%}
+
+{% load static %}
+
+{% block css %}
+
+
+
+{% endblock %}
+
+
+{% block body %}
+
+{% if form.errors %}
+
+
+<div class="alert alert-danger" role="alert">
+    Error al cargar formulario. Intente otra vez.
+</div>  
+
+{% endif %}
+<h1>Registro</h1>
+<form action="{% url 'registro_usuario' %}" method="POST">{% csrf_token %}
+{{form}}
+
+<br>
+<input type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+
+
+{% endblock %}
+
+{% block script %}
+
+
+
+
+{% endblock %}
+
