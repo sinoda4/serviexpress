@@ -11,9 +11,22 @@
 
 {% block body %}
 
-{% if form.errors %}
 
 
+<div class="container">
+    <h1>Crear categoria</h1>
+    <form id="formAgregar" action="{% url 'transbank' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+
+            <div class="col-md-12">
+                <label for="txtnombreCategoria">Nombre categoria:</label>
+                <input name="txtnombreCategoria" id="txtnombreCategoria" type="text" class="form-control">
+            </div>
+
+            
+        <button class="btn btn-success mt-5 w-100">Agregar categoria</button>
+    </form>
+</div>
 
 
 {% endblock %}
