@@ -92,8 +92,8 @@
             <div class="card" style="width: 18rem;">
                 <img src="{{p.imagenUrl.url}}" class="card-img-top" alt="..." height="150px" width="100px">
                 <div class="card-body">
-                    <h5 class="card-title">{{s.nombre_servicio}}</h5>
-                    <p class="card-text">${{s.precio}}</p>
+                    <h5 class="card-title">{{p.nombre_producto}}</h5>
+                    <p class="card-text">${{p.precio}}</p>
                     <a href="producto/{{p.pk}}" class="btn btn-primary">Ver servicio</a>
                 </div>
             </div>
@@ -102,6 +102,16 @@
         {% endfor %}
 
     </div>
+</div>
+
+
+<div class="container mt-5 text-center">
+  <h1>Donde nos encontramos</h1>
+
+  <h2>MAPA</h2>
+
+
+  <h3>Direccion: Calle falsa 1234</h3>
 </div>
 
 
