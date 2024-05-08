@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from .forms import *
+import json
 import requests
 # Create your views here.
 
@@ -27,6 +28,7 @@ def logout_user(request):
     messages.warning(request, ("Haz cerrado sesion exitosamente"))
     return redirect('home')
 
+#Registro de usuario
 def register_user(request):
     if request.method == "POST":
         form = RegistroUsuarioForm(request.POST)
@@ -43,25 +45,44 @@ def register_user(request):
         form  = RegistroUsuarioForm()
         return render(request, 'auth/registroUsuario.html', {"form": form})
 
+
+#Se utilizo payku como api
 def transbank(request):
-    api_key = "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C"
-    commerce_code = "597055555532"
-    base_url = "https://webpay3gint.transbank.cl"
+    #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
+    PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
+    BASE_URL = "https://app.payku.cl/api/transaction"
     if request.method == "POST":
-        payload = {
-            "buy_order": "ordenCompra12345678",
-            "session_id": "sesion1234557545",
-            "amount": 10000,
+        #DATA DE PRUEBA 
+        data = {
+            "email": "johndoe@example.com",
+            "order": "98745",
+            "subject": "payment description",
+            "amount": 1,
+            "payment": 1,
+            "urlreturn": "https://youwebsite.com/urlreturn?orderClient=98745",
+            "urlnotify": "https://www.youwebsite.com/urlnotify?orderClient=98745",
+            "additional_parameters": {
+                "parameters1": "keyValue",
+                "parameters2": "keyValue",
+                "order_ext": "fff-777"
+            }
         }
 
-        response = requests.post(f'{base_url}/rswebpaytransaction/api/webpay/v1.2/transactions/', json=payload, headers={'Tbk-Api-Key-Id': commerce_code, 'Tbk-Api-Key-Secret': api_key})
+
+        url = BASE_URL  
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {PUBLIC_KEY}"
+        }
+        body = json.dumps(data)
+        response = requests.post(url, headers=headers, data=body)
+
         if response.status_code == 200:
-            data = response.json()
-            print("funciona")
-            return JsonResponse({'response': data})
+            result = response.json()
+            print(result)
+            return JsonResponse(result, status=200)
         else:
-            return JsonResponse({'error': 'Error en la solicitud a la API de Transbank'}, status=500)
-        
-        return redirect('transbank')
+            return JsonResponse({'mal': 'mal'}, status=500)
+                
     else:
         return render(request, 'auth/transbank.html', {})
