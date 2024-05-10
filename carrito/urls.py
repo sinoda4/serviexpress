@@ -13,5 +13,5 @@ urlpatterns =[
       path("", views.carrito, name="carrito"),
       path("realizarCompra", views.realizarCompra, name="realizarCompra"),
       path("add", views.add_carrito, name="add_carrito"),
-      path("remove", views.remove_carrito, name="remove-carrito"),
+      path("delete", views.delete_carrito, name="delete-carrito"),
 ]

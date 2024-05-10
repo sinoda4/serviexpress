@@ -13,6 +13,8 @@
 
 
 
+{% if productos_carrito %}
+
 <div class="container text-center mt-5">
     <div  id="containerCarrito" class="container mt-3">
         <div class="row" id="rowTitulos">
@@ -30,7 +32,30 @@
             </div>
         </div>
         
+        <!--Falta agregar los productos, pero funciona-->
+        {% for p in productos_carrito %}   
+        <div class="row row-productos mt-2">
+            <div class="col">
+                <img class="img-carrito" src="{{p.imagenUrl.url}}" alt="p.nombre_producto">
+            </div>
+            <div class="col">
+                <p>{{p.nombre_producto}}</p>
+            </div>
+            <div class="col">
+                <p>{{p.precio}}</p>
+            </div>
+            <div class="col">
+                <strong>Cantidad</strong>
+            </div>
+        </div>
+        {% endfor %} 
+
+
     </div>
+
+
+
+    <hr>
 
     <div class="row mt-2">
         <div class="col col-md-6">
@@ -41,22 +66,22 @@
         </div>
         
 
-
         {% if user.is_authenticated%}
 
         <div class="col col-md-12 mt-2">
-            <!-- <a id="btnComprar"  class="btn btn-primary w-50" data-csrf-token="{{ csrf_token }}">Realizar compra</button> -->
             <a id="btnComprar" href="{% url 'realizarCompra' %}" class="btn btn-primary w-50" data-csrf-token="{{ csrf_token }}" tabindex="-1" role="button" aria-disabled="true">Realizar compra</a>
         </div>
         {% else %}
         
-        <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para confirmar</a>
+            <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para confirmar</a>
         {% endif %}
     </div>
-</div>
 
+{% else %}
 
+<p>No has agregado nada</p>
 
+{% endif %}
 
 
 
@@ -66,7 +91,7 @@
 
 {% block script %}
 
-<script src="{% static 'js/carrito.js' %}"></script>
+
 
 
 {% endblock %}

@@ -51,7 +51,7 @@ def eliminarProducto(request, prod_id):
     os.remove(ruta_imagen)
     producto.delete()
     messages.warning(request, ("Producto eliminado con exito"))
-    return redirect("crudProductos")
+    return redirect("crud_productos")
 
 
 def agregarCategoria(request):
@@ -60,7 +60,7 @@ def agregarCategoria(request):
         nombre_categoria=v_nombre,
     )
     messages.success(request, ("Categoria agregada con exito"))
-    return redirect("crudProductos")
+    return redirect("crud_productos")
 
 
 def agregarProducto(request):

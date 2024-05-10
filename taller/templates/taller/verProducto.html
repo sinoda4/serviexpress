@@ -38,7 +38,7 @@
                 <p><strong>Precio de producto:</strong>${{producto.precio}}</p>
                 <input id="precioProducto" value="{{producto.precio}}" type="number" hidden>
 
-                <button id="btnAddProducto" class="btn btn-success mt-1" value="{{producto.pk}}">añadir producto al carrito</button>
+                <button id="add-carrito" class="btn btn-success mt-1" value="{{producto.pk}}" type="button" >añadir producto al carrito</button>
             </div>
         </div>
     </div>    
@@ -59,7 +59,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{p.nombre_producto}}</h5>
                     <p class="card-text">${{p.precio}}</p>
-                    <a href="producto/{{p.pk}}" class="btn btn-primary">Ver producto</a>
+                    <a href="{% url 'ventaProducto' p.pk%}" class="btn btn-primary">Ver producto</a>
                 </div>
             </div>
         </div>
@@ -73,14 +73,14 @@
 
 <script src="{% static 'js/agregarCarrito.js' %}"></script>
 <script>
-$(document).on('click', '#btnAddProducto', function(e){
+$(document).on('click', '#add-carrito', function(e){
     e.preventDefault();
     $.ajax({
         type: 'POST',
-        url: 'add_carrito',
+        url: "{% url 'add_carrito' %}",
         data: {
-            producto_id: $('#btnAddProducto').val(),
-            csrfmiddlewaretoke: '{{csrf_token}}',
+            producto_id: $('#add-carrito').val(),
+            csrfmiddlewaretoken: '{{csrf_token}}',
             action: 'post',
         },
         success: function(json){

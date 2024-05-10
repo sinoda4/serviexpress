@@ -4,9 +4,11 @@
     border-radius: 30px;
 }
 
-.imgCarrito{
-    border: solid black 5px;
+.img-carrito{
+    border: solid black 2px;
     border-radius: 30px;
+    width: 100px;
+    height: 100px;
 }
 p{
     text-align: center;
@@ -14,5 +16,14 @@ p{
 }
 #rowTitulos{
     font-size: 30px;
-    
 }
+
+
+.row-productos p {
+    font-size: 20px; /* Cambia el tamaño de la letra según lo necesites */
+}
+
+#rowTitulos {
+    border-bottom: solid black 3px;
+}
+

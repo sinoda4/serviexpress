@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
 import json
-from datetime import datetime, timedelta
 from taller.models import *
 from django.http import HttpResponse, JsonResponse
 from taller.models import Producto
@@ -9,8 +8,14 @@ from .carrito import Carrito
 
 # Create your views here.
 
+
+
 def carrito(request):
-    return render(request, "carrito/carrito.html", {})
+    carrito = Carrito(request)
+    productos_carrito = carrito.get_productos
+    print(productos_carrito)
+
+    return render(request, "carrito/carrito.html", {"productos_carrito": productos_carrito})
     
 
 def realizarCompra(request):
@@ -45,16 +50,32 @@ def realizarCompra(request):
         
 
 def add_carrito(request):
+    #Obtener el carrito
     carrito = Carrito(request)
 
     if request.POST.get('action') == 'post':
+
+        #Obtener el producto del carrito
         producto_id = int(request.POST.get('producto_id'))
+
+        #Obtener el producto de la base de datos
         producto = get_object_or_404(Producto, pk=producto_id)
 
+        #save session
         carrito.add(producto=producto)
 
+        #add cantidad
+        carrito_cantidad = carrito.__len__()
+
+
+
+        #devolver si funciono o no
         return  JsonResponse({'Producto nombre': producto.nombre_producto})
+        
 
-def remove_carrito(request):
-    print("hola")
 
+def delete_carrito(request):
+    pass
+
+def update_carrito(request):
+     pass
