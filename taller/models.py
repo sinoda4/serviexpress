@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -53,7 +53,7 @@ class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
     total = models.IntegerField(default=0, blank=True, null=True)
     fecha_venta = models.DateField(auto_now_add=True)
-    FK_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    FK_cliente = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
 

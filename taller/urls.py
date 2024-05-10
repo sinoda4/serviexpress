@@ -36,9 +36,7 @@ urlpatterns = [
     ),
     
 
-    # Compra y carrito
-    path("carrito", views.carrito, name="carrito"),
-    path("carrito/confirmarServicio", views.confirmarServicio),
+    # Compra y carrito, agregar otra vez en caso de fallar el nuevo D:
     # CRUD Proveedores
     path("crud/proveedores", views.crudProveedores, name="crud_proveedores"),
     

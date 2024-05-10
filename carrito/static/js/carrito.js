@@ -17,7 +17,7 @@ $(function () {
         let productos = [];
         carrito.forEach(p => {
             let producto = {
-                "id": p.id_servicio,
+                "id": p.id_producto,
             }
             productos.push(producto)
         });
@@ -31,7 +31,7 @@ $(function () {
 
         $.ajax({
             type: 'POST',
-            url: 'carrito/confirmarServicio',
+            url: 'realizarCompra',
             data: datos,
             success: function(response) {
                 console.log(response);
