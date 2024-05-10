@@ -79,7 +79,10 @@ def transbank(request):
 
         if response.status_code == 200:
             result = response.json()
-            print(result)
+            
+            
+            print(result["url"])
+            return redirect(result["url"])
             return JsonResponse(result, status=200)
         else:
             return JsonResponse({'mal': 'mal'}, status=500)

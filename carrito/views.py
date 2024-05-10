@@ -53,7 +53,7 @@ def add_carrito(request):
 
         carrito.add(producto=producto)
 
-        return JsonResponse({'Producto nombre': producto.nombre_producto})
+        return  JsonResponse({'Producto nombre': producto.nombre_producto})
 
 def remove_carrito(request):
     print("hola")

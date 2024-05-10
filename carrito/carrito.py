@@ -11,3 +11,8 @@ class Carrito():
 
     def add(self, request):
         producto_id = str(producto_id)
+
+        if producto_id in self.cart:
+            pass
+        else:
+            print("hola")
