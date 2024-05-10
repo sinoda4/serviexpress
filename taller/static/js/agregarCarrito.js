@@ -11,7 +11,7 @@ $(function () {
 
 
 
-$("#btnAddProducto").on("click", function () {
+/* $("#btnAddProducto").on("click", function () {
     console.log("holi");
     let carrito = JSON.parse(localStorage.getItem("carrito"))
 
@@ -72,10 +72,14 @@ $("#btnAddProducto").on("click", function () {
     localStorage.setItem("carrito", JSON.stringify(carrito));
     
    
-})
+}) */
+
+
+//nueva forma de carrito
 
 
 
+//Mensaje no cambiar
 $("#btnAddProducto").on("click", function Mensaje() {
     let carrito = JSON.parse(localStorage.getItem("carrito"))
     let index = carrito.findIndex(object => {
@@ -120,3 +124,6 @@ function eliminarMensaje() {
         msgEliminar.remove();
     }
 } 
+
+
+

@@ -1,9 +1,11 @@
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import json
 from datetime import datetime, timedelta
 from taller.models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from taller.models import Producto
+from .carrito import Carrito
+
 
 # Create your views here.
 
@@ -41,3 +43,18 @@ def realizarCompra(request):
         )
         return redirect("home")
         
+
+def add_carrito(request):
+    carrito = Carrito(request)
+
+    if request.POST.get('action') == 'post':
+        producto_id = int(request.POST.get('producto_id'))
+        producto = get_object_or_404(Producto, pk=producto_id)
+
+        carrito.add(producto=producto)
+
+        return JsonResponse({'Producto nombre': producto.nombre_producto})
+
+def remove_carrito(request):
+    print("hola")
+

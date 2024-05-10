@@ -17,6 +17,7 @@
 
 
 
+<!--Venta de producto-->
 <div class="container mt-3">
     
     <div id="ventaDiv" class="row text-center">
@@ -29,7 +30,7 @@
             <div class="container">
                 <p><strong>Producto:</strong> {{producto.nombre_producto}} </p>  
                 <input id="nombreProducto" value="{{producto.nombre_producto}}" type="text" hidden>
-                <p value="{{producto.pk}}"><Strong>Codigo de servicio:</Strong> {{producto.pk}}</p>
+                <p value="{{producto.pk}}"><Strong>Codigo de producto:</Strong> {{producto.pk}}</p>
                 <input id="idProducto" value="{{producto.pk}}" type="number" hidden>
                 <p><strong>Descripcion: </strong>  {{producto.descripcion}}</p>
             
@@ -37,12 +38,17 @@
                 <p><strong>Precio de producto:</strong>${{producto.precio}}</p>
                 <input id="precioProducto" value="{{producto.precio}}" type="number" hidden>
 
-                <button id="btnAddProducto" class="btn btn-success mt-1" >añadir producto al carrito</button>
+                <button id="btnAddProducto" class="btn btn-success mt-1" value="{{producto.pk}}">añadir producto al carrito</button>
             </div>
         </div>
     </div>    
 </div>
 <br>
+
+
+
+
+<!--Para ver otros productos relacionados-->
 <div class="container text-center">
     <h2>Otros productos</h2>
     <div class="row">
@@ -66,5 +72,32 @@
 {% block script %}
 
 <script src="{% static 'js/agregarCarrito.js' %}"></script>
+<script>
+$(document).on('click', '#btnAddProducto', function(e){
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: 'add_carrito',
+        data: {
+            producto_id: $('#btnAddProducto').val(),
+            csrfmiddlewaretoke: '{{csrf_token}}',
+            action: 'post',
+        },
+        success: function(json){
+            console.log(json)
+        },
+        error: function(xhr, errmsg, err){
+            console.log(json)
+        }
+    }
+    
+    
+    );
 
+
+
+
+});
+    
+</script>
 {% endblock %}
