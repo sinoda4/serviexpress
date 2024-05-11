@@ -27,3 +27,7 @@ p{
     border-bottom: solid black 3px;
 }
 
+.row-productos-carrito{
+    border: solid black 1px;
+    border-radius: 30px;
+}

@@ -11,13 +11,15 @@ class Carrito():
 
         self.cart = cart
 
-    def add(self, producto):
+    def add(self, producto, cantidad):
         producto_id = str(producto.pk)
+        producto_cantidad = str(cantidad)
 
         if producto_id in self.cart:
             pass
         else:
-            self.cart[producto_id] = {'precio': str(producto.precio)}
+            #self.cart[producto_id] = {'precio': str(producto.precio)}
+            self.cart[producto_id] = int(producto_cantidad)
 
         self.session.modified = True
 
@@ -32,3 +34,7 @@ class Carrito():
 
         #retornar
         return productos
+    
+    def get_cantidad(self):
+        cantidades = self.cart
+        return cantidades

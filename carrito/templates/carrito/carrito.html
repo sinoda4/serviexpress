@@ -15,67 +15,34 @@
 
 {% if productos_carrito %}
 
-<div class="container text-center mt-5">
-    <div  id="containerCarrito" class="container mt-3">
-        <div class="row" id="rowTitulos">
-            <div class="col">
-                <strong>Imagen</strong> 
-            </div>
-            <div class="col">
-                <strong>Producto</strong>
-            </div>
-            <div class="col">
-                <strong>Precio</strong>
-            </div>
-            <div class="col">
-                <strong>Cantidad</strong>
-            </div>
-        </div>
+<div class="container mt-5">
+    {% for p in productos_carrito %}
+    <div class="row  row-cols-1 mt-1 text-center row-productos-carrito">
         
-        <!--Falta agregar los productos, pero funciona-->
-        {% for p in productos_carrito %}   
-        <div class="row row-productos mt-2">
-            <div class="col">
-                <img class="img-carrito" src="{{p.imagenUrl.url}}" alt="p.nombre_producto">
-            </div>
-            <div class="col">
-                <p>{{p.nombre_producto}}</p>
-            </div>
-            <div class="col">
-                <p>{{p.precio}}</p>
-            </div>
-            <div class="col">
-                <strong>Cantidad</strong>
-            </div>
+        <div class="col-lg-6 col-sm-12 col-md-12 ">
+            <img class="img-carrito" src="{{p.imagenUrl.url}}" alt="{{producto.descripcion}}">
         </div>
-        {% endfor %} 
+    
+        <div class="col-lg-6 ">
+            <div class="container">
+                <p><strong>Producto:</strong> {{p.nombre_producto}} </p>  
+                    <p><Strong>Codigo de producto:</Strong> {{p.pk}}</p>                    
+                    <p><strong>Precio de producto:</strong>${{p.precio}}</p>
+                    <p><strong>Cantidad:</strong>
+                        {% for key, value in cantidades.items %}
+                        {% if key == p.pk|slugify%}
+                            {{value}}                             
+                        {% endif %}
+                        
+                    
+                        {% endfor %}
+                        </p>
+                </div>
+            </div>  
+    </div>  
+    {% endfor %}
+</div>
 
-
-    </div>
-
-
-
-    <hr>
-
-    <div class="row mt-2">
-        <div class="col col-md-6">
-            <p>Total a pagar: </p> 
-        </div>
-        <div class="col col-md-6">
-            <p value="0" id="totalPagar"> </p>
-        </div>
-        
-
-        {% if user.is_authenticated%}
-
-        <div class="col col-md-12 mt-2">
-            <a id="btnComprar" href="{% url 'realizarCompra' %}" class="btn btn-primary w-50" data-csrf-token="{{ csrf_token }}" tabindex="-1" role="button" aria-disabled="true">Realizar compra</a>
-        </div>
-        {% else %}
-        
-            <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para confirmar</a>
-        {% endif %}
-    </div>
 
 {% else %}
 
@@ -83,8 +50,29 @@
 
 {% endif %}
 
+    
 
 
+
+
+
+
+
+
+
+<div class="container text-center mt-2">
+    {% if user.is_authenticated%}
+        <a id="btnComprar" href="{% url 'realizarCompra' %}" class="btn btn-primary w-100" data-csrf-token="{{ csrf_token }}" tabindex="-1" role="button" aria-disabled="true">Realizar compra</a>
+    {% else %}    
+        <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para realizar compra</a>
+</div>
+
+
+
+        
+        
+        
+{% endif %}
 
 
 {% endblock %}

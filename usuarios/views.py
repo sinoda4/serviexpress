@@ -46,46 +46,4 @@ def register_user(request):
         return render(request, 'auth/registroUsuario.html', {"form": form})
 
 
-#Se utilizo payku como api
-def transbank(request):
-    #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
-    PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
-    BASE_URL = "https://app.payku.cl/api/transaction"
-    if request.method == "POST":
-        #DATA DE PRUEBA 
-        data = {
-            "email": "johndoe@example.com",
-            "order": "98745",
-            "subject": "payment description",
-            "amount": 1,
-            "payment": 1,
-            "urlreturn": "https://youwebsite.com/urlreturn?orderClient=98745",
-            "urlnotify": "https://www.youwebsite.com/urlnotify?orderClient=98745",
-            "additional_parameters": {
-                "parameters1": "keyValue",
-                "parameters2": "keyValue",
-                "order_ext": "fff-777"
-            }
-        }
 
-
-        url = BASE_URL  
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {PUBLIC_KEY}"
-        }
-        body = json.dumps(data)
-        response = requests.post(url, headers=headers, data=body)
-
-        if response.status_code == 200:
-            result = response.json()
-            
-            
-            print(result["url"])
-            return redirect(result["url"])
-            return JsonResponse(result, status=200)
-        else:
-            return JsonResponse({'mal': 'mal'}, status=500)
-                
-    else:
-        return render(request, 'auth/transbank.html', {})

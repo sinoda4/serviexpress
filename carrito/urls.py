@@ -14,4 +14,5 @@ urlpatterns =[
       path("realizarCompra", views.realizarCompra, name="realizarCompra"),
       path("add", views.add_carrito, name="add_carrito"),
       path("delete", views.delete_carrito, name="delete-carrito"),
+      path("payku", views.payku, name="payku")
 ]
