@@ -35,6 +35,8 @@ def checkout(request):
 
     return render(request, "payments/payment_checkout.html", {"productos": productos_carrito, "cantidades": cantidades, "total_carrito": total_carrito, "usuario": usuario})
 
+
+#REALIZAR VENTA Y PAGO CON PAYKU
 def payment_process(request):
     #DATOS PAYKU
     PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
@@ -78,8 +80,8 @@ def payment_process(request):
             "subject": f"Pago de: {usuario.username} - orden: {venta_id}",
             "amount": int(crear_venta.total),
             "payment": 1,
-            "urlreturn": "https://localhost:8000",
-            "urlnotify": "https://localhost:8000",
+            "urlreturn": "https://localhost:8000/home",
+            "urlnotify": "https://localhost:8000/home",
         }
 
         url = BASE_URL  
@@ -103,6 +105,7 @@ def payment_process(request):
         pass
 
 
+#ESTO ES UN EJEMPLO DE PRUEBA NO TOCAR 
 def payku(request):
     #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
     PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
