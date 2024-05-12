@@ -62,9 +62,7 @@
 
 <div class="container text-center mt-2">
     {% if user.is_authenticated%}
-        <div class="d-grid gap-2">
-            <button id="realizar-compra"  class="btn btn-primary" type="button">Realizar compra</button>
-        </div>
+        <a href="{% url 'payment_sumary' %}" class="btn btn-primary w-50" method="POST" tabindex="-1" role="button" aria-disabled="true">Ir a pagar</a>
     {% else %}    
         <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para realizar compra</a>
     {% endif %}
@@ -153,29 +151,6 @@
 </script>
 
 
-
-<script>
-    $(document).on('click', '#realizar-compra', function(e){
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'realizar_compra' %}",
-            data: {
-                csrfmiddlewaretoken: '{{csrf_token}}',
-                action: 'post',
-            },
-            success: function(json){
-                console.log("funciona")
-            },
-            error: function(xhr, errmsg, err){
-                console.log(json)
-            }
-        }
-         
-        );
-    
-    })
-</script> 
 
 
 {% endblock %}

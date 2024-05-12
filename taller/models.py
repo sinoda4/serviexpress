@@ -49,19 +49,6 @@ class Producto(models.Model):
         txt = "id: {0} - nombre: {1} - precio: {2}"
         return txt.format(self.id_producto, self.nombre_producto, self.precio)
 
-class Venta(models.Model):
-    id_venta = models.AutoField(primary_key=True)
-    total = models.IntegerField(default=0, blank=True, null=True)
-    fecha_venta = models.DateField(auto_now_add=True)
-    FK_cliente = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-
-
-class Detalle_venta(models.Model):
-    id_detalle_reserva = models.AutoField(primary_key=True)
-    id_reserva = models.ForeignKey(Venta, on_delete=models.CASCADE)
-    Fk_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad_producto = models.IntegerField(default=1, )
 
 class Empleado(models.Model):
     rut = models.IntegerField()

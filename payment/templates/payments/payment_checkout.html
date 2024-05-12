@@ -1,0 +1,85 @@
+{% extends "taller/base.html"%}
+
+{% load static %}
+
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+{% endblock %}
+
+
+{% block body %}
+
+<div id="div-tittle" class="container-fluid text-center">
+    <br>
+    <br>
+
+    <H1>Resumen de compra:</H1>
+
+    <br>
+    <br>
+</div>
+  
+
+
+<div class="container container-fluid mt-5">
+    <div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-title">Productos: </h4>
+            
+            
+            <ul class="list-group list-group-flush">
+                {% for p in productos %}
+                {% for key, value in cantidades.items %}
+                {% if key == p.pk|slugify%}
+                
+                <li class="list-group-item">Producto: <strong>  {{p.nombre_producto}} </strong> - Precio: <strong>${{p.precio}}</strong> - Cantidad:  <strong>{{value}} </strong> </li>    
+                {% endif %}
+                
+            {% endfor %}
+                
+                {% endfor %}    
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="container container-fluid mt-5">
+    <div class="card text-center">
+        <div class="card-body">
+            <h4 class="card-title">Datos de usuario: </h4>
+                
+            <ul class="list-group list-group-flush">
+          
+                
+                <li class="list-group-item">Usuario: <strong>{{usuario.username}}</strong> </li>    
+                <li class="list-group-item">Correo: <strong>{{usuario.email}}</strong> </li>    
+            </ul>
+
+
+            <hr>
+            
+
+            <a href="{% url 'carrito' %}" class="btn btn-secondary mt-2 mb-2">Volver al carrito</a>
+
+            <form action="{% url 'payment_process' %}" method="POST"> {% csrf_token %}
+            <button type="submit" class="btn btn-primary"> Pagar </button>    
+            </form> 
+        </div>
+    </div>
+</div>
+
+
+    
+{% endblock %}
+
+
+{% block script %}
+
+
+
+{% endblock %}
+

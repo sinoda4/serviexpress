@@ -1,6 +1,5 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.template import loader
 import os
 from django.conf import settings

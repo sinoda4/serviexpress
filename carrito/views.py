@@ -15,7 +15,6 @@ def carrito(request):
     productos_carrito = carrito.get_productos
     productos_cantidad = carrito.get_cantidad
     total_carrito = carrito.total
-    print(productos_carrito)
 
     return render(request, "carrito/carrito.html", {"productos_carrito": productos_carrito, "cantidades": productos_cantidad, "total": total_carrito})
     
@@ -74,69 +73,5 @@ def update_carrito(request):
 
         return JsonResponse({"Cantidad": producto_cantidad})
 
-
-
-#Se utilizo payku como api
-def payku(request):
-    #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
-    PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
-    BASE_URL = "https://app.payku.cl/api/transaction"
-    if request.method == "POST":
-        #DATA DE PRUEBA 
-        data = {
-            "email": "johndoe@example.com",
-            "order": "98745",
-            "subject": "payment description",
-            "amount": 1,
-            "payment": 1,
-            "urlreturn": "https://localhost:8000",
-            "urlnotify": "https://www.youwebsite.com/urlnotify?orderClient=98745",
-            "additional_parameters": {
-                "parameters1": "keyValue",
-                "parameters2": "keyValue",
-                "order_ext": "fff-777"
-            }
-        }
-
-
-        url = BASE_URL  
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {PUBLIC_KEY}"
-        }
-        body = json.dumps(data)
-        response = requests.post(url, headers=headers, data=body)
-
-        if response.status_code == 200:
-            result = response.json()
-            
-            """ print(result["url"])
-            return redirect(result["url"]) """
-            return JsonResponse(result, status=200)
-        else:
-            return JsonResponse({'mal': 'mal'}, status=500)
-                
-    else:
-        return render(request, 'carrito/transbank.html', {})
-    
-
-
-##TODO Esto no funciona nada XD, arreglar despues
-def realizar_compra(request):
-    #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
-    PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
-    BASE_URL = "https://app.payku.cl/api/transaction"
-    
-    #Llamada al carrito
-    carrito = Carrito(request)
-    if request.POST.get('action') == 'post':
-        print("hola")
-        productos_carrito = carrito.get_productos
-        productos_cantidad = carrito.get_cantidad
-        
-        pass
-    else:
-        print("chao")
-        pass
 
     

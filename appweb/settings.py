@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "usuarios.apps.UsuariosConfig",
     "taller.apps.TallerConfig",
     "carrito",
+    "payment",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
