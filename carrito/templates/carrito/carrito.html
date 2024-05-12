@@ -19,7 +19,7 @@
     {% for p in productos_carrito %}
     <div class="row  row-cols-1 mt-1 text-center row-productos-carrito">
         
-        <div class="col-lg-6 col-sm-12 col-md-12 ">
+        <div class="col-lg-6 col-sm-12 col-md-12 mt-2 mb-2">
             <img class="img-carrito" src="{{p.imagenUrl.url}}" alt="{{producto.descripcion}}">
         </div>
     
@@ -28,20 +28,50 @@
                 <p><strong>Producto:</strong> {{p.nombre_producto}} </p>  
                     <p><Strong>Codigo de producto:</Strong> {{p.pk}}</p>                    
                     <p><strong>Precio de producto:</strong>${{p.precio}}</p>
-                    <p><strong>Cantidad:</strong>
-                        {% for key, value in cantidades.items %}
+                    
+                    {% for key, value in cantidades.items %}
                         {% if key == p.pk|slugify%}
-                            {{value}}                             
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Cantidad:</span>
+                                <input  id="select{{p.pk}}" class="form-control" aria-label="Sizing example input" type="number" min="1" value="{{value}}" max="50" aria-describedby="inputGroup-sizing-default"
+                        >
+                        </div>   
+                            
                         {% endif %}
                         
-                    
-                        {% endfor %}
-                        </p>
+                    {% endfor %}
+                
+                    <a href="{% url 'ventaProducto' p.pk%}" class="btn btn-success mb-2">Ver producto</a>
+                    <button type="button" class="btn btn-primary mb-2 update-carrito" data-index="{{p.pk}}" >Actualizar cantidad</button>
+                    <button type="button" class="btn btn-danger mb-2 delete-carrito" data-index="{{p.pk}}" >Eliminar producto</button>
                 </div>
             </div>  
     </div>  
     {% endfor %}
 </div>
+
+
+
+<hr>
+
+<div class="container text-center mt-3">
+    <h3><strong>TOTAL:</strong> ${{total}}</h3>
+</div>
+
+
+
+<div class="container text-center mt-2">
+    {% if user.is_authenticated%}
+        <div class="d-grid gap-2">
+            <button id="realizar-compra"  class="btn btn-primary" type="button">Realizar compra</button>
+        </div>
+    {% else %}    
+        <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para realizar compra</a>
+    {% endif %}
+</div>
+
+
+
 
 
 {% else %}
@@ -51,35 +81,101 @@
 {% endif %}
 
     
-
-
-
-
-
-
-
-
-
-<div class="container text-center mt-2">
-    {% if user.is_authenticated%}
-        <a id="btnComprar" href="{% url 'realizarCompra' %}" class="btn btn-primary w-100" data-csrf-token="{{ csrf_token }}" tabindex="-1" role="button" aria-disabled="true">Realizar compra</a>
-    {% else %}    
-        <a href="{% url 'login' %}" class="btn btn-primary w-50" tabindex="-1" role="button" aria-disabled="true">Iniciar sesion para realizar compra</a>
-</div>
-
-
-
-        
-        
-        
-{% endif %}
-
-
 {% endblock %}
+
 
 {% block script %}
 
+<!-- Script actualizar cantidad -->
+<script>
+    $(document).on('click', '.update-carrito', function(e){
+        console.log("Hola");
+        var productoId = $(this).data('index');
+        var correcto = $( "#select" + productoId ).val();
+        e.preventDefault();
+        if (correcto > 0){
+            $.ajax({
+            type: 'POST',
+            url: "{% url 'update_carrito' %}",
+            data: {
+                producto_id: $(this).data('index'),
+                producto_cantidad: $( "#select" + productoId ).val(),
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                action: 'post',
+            },
+            success: function(json){
+                
+                location.reload();
+            },
+            error: function(xhr, errmsg, err){
+                console.log(json)
+            }
+        });
+    
+        }
+        else{
+            console.log("Cantidad 0 o menor");
+        }
+        
+    
+    
+    
+    });
+</script>
 
+<!-- Script eliminar producto -->
+<script>
+    $(document).on('click', '.delete-carrito', function(e){
+        console.log("Hola");
+        var productoId = $(this).data('index');
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'delete_carrito' %}",
+            data: {
+                producto_id: $(this).data('index'),
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                action: 'post',
+            },
+            success: function(json){
+                
+                location.reload();
+            },
+            error: function(xhr, errmsg, err){
+                console.log(json)
+            }
+        }
+         
+        );
+    
+    
+    });
+</script>
+
+
+
+<script>
+    $(document).on('click', '#realizar-compra', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'realizar_compra' %}",
+            data: {
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                action: 'post',
+            },
+            success: function(json){
+                console.log("funciona")
+            },
+            error: function(xhr, errmsg, err){
+                console.log(json)
+            }
+        }
+         
+        );
+    
+    })
+</script> 
 
 
 {% endblock %}

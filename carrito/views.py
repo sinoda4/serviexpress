@@ -14,15 +14,13 @@ def carrito(request):
     carrito = Carrito(request)
     productos_carrito = carrito.get_productos
     productos_cantidad = carrito.get_cantidad
+    total_carrito = carrito.total
     print(productos_carrito)
 
-    return render(request, "carrito/carrito.html", {"productos_carrito": productos_carrito, "cantidades": productos_cantidad})
+    return render(request, "carrito/carrito.html", {"productos_carrito": productos_carrito, "cantidades": productos_cantidad, "total": total_carrito})
     
 
-def realizarCompra(request):
-        
-        return redirect("home")
-        
+
 
 
 
@@ -53,10 +51,29 @@ def add_carrito(request):
 
 
 def delete_carrito(request):
-    pass
+    carrito = Carrito(request)
+    if request.POST.get('action') == 'post':
+        producto_id = int(request.POST.get('producto_id'))
+        producto = get_object_or_404(Producto, pk=producto_id)
+        carrito.delete(producto)
+
+        return JsonResponse({"Eliminado": producto.nombre_producto})
 
 def update_carrito(request):
-     pass
+    carrito = Carrito(request)
+
+    if request.POST.get('action') == 'post':
+
+        #Obtener el producto del carrito
+        producto_id = int(request.POST.get('producto_id'))
+        producto_cantidad = int(request.POST.get('producto_cantidad'))
+        producto = get_object_or_404(Producto, pk=producto_id)
+
+        #Obtener el producto de la base de datos
+        carrito.update(producto=producto, cantidad=producto_cantidad)
+
+        return JsonResponse({"Cantidad": producto_cantidad})
+
 
 
 #Se utilizo payku como api
@@ -101,3 +118,25 @@ def payku(request):
                 
     else:
         return render(request, 'carrito/transbank.html', {})
+    
+
+
+##TODO Esto no funciona nada XD, arreglar despues
+def realizar_compra(request):
+    #KEY PUBLICA NO TOCAR, EN CASO DE NO FUNCIONAR HABLAR CON ADONIS
+    PUBLIC_KEY = "tkpu412d0f80c14a55ff8bb7bb822247"
+    BASE_URL = "https://app.payku.cl/api/transaction"
+    
+    #Llamada al carrito
+    carrito = Carrito(request)
+    if request.POST.get('action') == 'post':
+        print("hola")
+        productos_carrito = carrito.get_productos
+        productos_cantidad = carrito.get_cantidad
+        
+        pass
+    else:
+        print("chao")
+        pass
+
+    
