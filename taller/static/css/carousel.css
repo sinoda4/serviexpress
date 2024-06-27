@@ -24,14 +24,24 @@
     
 }
 
-#overlay-image-flores{
+#overlay-image-productos{
     background-image: url("../img/repuestos.webp");
 }
 
-#overlay-image-herramienta{
-    background-image: url("../img/productosJardineria.png");
+#overlay-image-informacion{
+    background-image: url("../img/quienesSomos.jpg");
 }
 
-#overlay-image-macetero{
-    background-image: url("../img/quienesSomos.jpg");
+#overlay-image-petshop{
+    background-image: url("../img/banner-petshop.jpg");
+}
+
+
+#overlay-image-dulces{
+    background-image: url("../img/banner-dulces.jpg");
+}
+
+
+#overlay-image-libros{
+    background-image: url("../img/banner-libros.jpg");
 }
