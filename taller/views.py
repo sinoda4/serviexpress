@@ -86,7 +86,7 @@ def agregarProducto(request):
         proveedor = v_proveedor
     )
     messages.success(request, ("Producto agregado con exito"))
-    return redirect("crudProductos")
+    return redirect("crud_productos")
 
 
 # Editar productos
@@ -123,7 +123,7 @@ def editarProducto(request, prod_id):
 
         productoBD.save()
         messages.success(request, ("Producto editado con exito"))
-        return redirect("crudProductos")
+        return redirect("crud_productos")
 
     else:
         prod = Producto.objects.get(pk=prod_id)
